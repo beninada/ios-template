@@ -1,0 +1,249 @@
+////////////////////////////////////////////////////////////
+// VARIABLES
+////////////////////////////////////////////////////////////
+$scale: .5;
+$anim-type: cubic-bezier(0.190, 1.000, 0.220, 1.000);
+$anim-duration: .65s;
+
+$bg-color: #FFF;
+$fill-color: #FFF;
+$border-color: #333;
+
+////////////////////////////////////////////////////////////
+// GLOBAL STYLES
+////////////////////////////////////////////////////////////
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+}
+
+body {
+  background: $bg-color;
+  font-size: 14px;
+  margin: 0;
+}
+
+////////////////////////////////////////////////////////////
+// ORIGINAL DEVICE (iPhone)
+////////////////////////////////////////////////////////////
+
+.device, .device *, .device *:after, .device *:before {
+  backface-visibility: hidden;
+}
+
+.device {
+  border: 2px solid $border-color;
+  background: $fill-color;
+  border-radius: 50px  * $scale;
+  box-shadow: 6px 6px 0px rgba(#000, .05);
+  transition: all $anim-duration $anim-type;
+}
+
+// The device in-call speaker
+.device__header {
+  position: absolute;
+  top: 45px * $scale;
+  left: 50%;
+  margin-left: -30px * $scale;
+  width: 60px * $scale;
+  height: 6px * $scale;
+  background: $border-color;
+  border-radius: 3px * $scale;
+  transition: all $anim-duration $anim-type;
+}
+.device__header:after, .device__header:before {
+  position: absolute;
+  content: "";
+  transition: all $anim-duration $anim-type;
+}
+// The luminosity sensor (?)
+.device__header:before {
+  top: -1px * $scale;
+  left: -18px * $scale;
+  width: 8px * $scale;
+  height: 8px * $scale;
+  border-radius: 4px * $scale;
+  border: 1px solid $border-color;
+  background: $border-color;
+}
+// The front-camera
+.device__header:after {
+  top: -25px * $scale;
+  left: 50%;
+  margin-left: -6px * $scale;
+  width: 12px * $scale;
+  height: 12px * $scale;
+  border-radius: 6px * $scale;
+  border: 1px solid $border-color;
+  background: $border-color;
+}
+// The device content (the touch part)
+.device__content {
+  width: 320px * $scale;
+  height: 568px * $scale;
+  background: $fill-color;
+  border: 1px solid $border-color;
+  border-radius: 3px * $scale;
+  margin: 80px * $scale 15px * $scale 80px * $scale 15px * $scale;
+  transition: all $anim-duration $anim-type;
+}
+// The home button
+.device__footer {
+  position: absolute;
+  bottom: 10px * $scale;
+  left: 50%;
+  margin-left: -30px * $scale;
+  width: 60px * $scale;
+  height: 60px * $scale;
+  border-radius: 30px * $scale;
+  border: 1px solid $border-color;
+  transition: all $anim-duration $anim-type;
+}
+// The home button square
+.device__footer:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -10px * $scale;
+  margin-top: -10px * $scale;
+  width: 20px * $scale;
+  height: 20px * $scale;
+  border: 1px solid $border-color;
+  border-radius: 5px * $scale;
+  transition: all $anim-duration $anim-type;
+}
+
+////////////////////////////////////////////////////////////
+// MODIFIERS
+////////////////////////////////////////////////////////////
+/**
+ * iPad and iPad Mini
+ */
+.device--ipad .device__header,
+.device--ipad-mini .device__header{
+  width: 0;
+  margin-left: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.device--ipad .device__header:before,
+.device--ipad-mini .device__header:before {
+  transform: scale(0);
+}
+
+.device--ipad .device__header:after,
+.device--ipad-mini .device__header:after
+{
+  transform: translate(0, 15px * $scale);
+}
+
+.device--ipad .device__content {
+  width: 768px * $scale;
+  height: 1024px * $scale;
+  margin: 80px * $scale;
+}
+.device--ipad-mini .device__content {
+  width: 768px * $scale;
+  height: 1024px * $scale;
+  margin: 80px * $scale 25px * $scale;
+}
+
+/**
+ * Browser
+ */
+.device--browser {
+  border-radius: round(8px * $scale);
+  border-bottom-right-radius: round(4px * $scale);
+  border-bottom-left-radius: round(4px * $scale);
+}
+.device--browser .device__header,
+.device--browser .device__header:after,
+.device--browser .device__header:before {
+  width: 14px * $scale;
+  height: 14px * $scale;
+  left: round(10px * $scale);
+  top: 0px;
+  transform: translate(0px, 0px) scale(1);
+  margin-left: 0px;
+  border-radius: round(7px * $scale);
+  background: transparent;
+  border: 1px solid $border-color;
+}
+
+.device--browser .device__header {
+  top: round(12px * $scale);
+}
+
+.device--browser .device__header:before {
+  left: round(18px * $scale);
+  top: -1px;
+}
+
+.device--browser .device__header:after {
+  left: round(36px * $scale) + 1px;
+  top: -1px;
+}
+
+.device--browser .device__content {
+  width: 1280px * $scale;
+  height: 800px * $scale;
+  border-right-width: 0px;
+  border-left-width: 0px;
+  border-bottom-width: 0px;
+  border-radius: 0px;
+  border-bottom-right-radius: round(4px * $scale);
+  border-bottom-left-radius: round(4px * $scale);
+  margin: 40px * $scale 0px 0px 0px;
+}
+.device--browser .device__footer {
+  transform: scale(0);
+}
+
+
+////////////////////////////////////////////////////////////
+// ...REST
+////////////////////////////////////////////////////////////
+/**
+ * Container to align the device in the center/middle
+ * of the screen. I could use translate() for it, but
+ * depending on the size of the window, the lines would
+ * look blurred.
+ */
+.container {
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  text-align: center;
+  /*background: #AAEC57;*/
+  transition: background $anim-duration $anim-type;
+  
+  &:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+  }
+  
+  > div {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+.credits {
+  font-family: "Helvetica Neue", sans-serif;
+  color: black; 
+  display: block;
+  position: absolute;
+  bottom: 0%;
+  padding: 5px;
+  font-size: 10px;
+}
